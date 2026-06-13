@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+@theme {
+  --color-aia-blue: #0061ff;
+  --color-signal-orange: #ff4d00;
+  --color-cloud-canvas: #e5e7eb;
+  --color-ink-black: #262626;
+  --color-paper-white: #f9f9f9;
+  --color-slate-gray: #727272;
+  --color-stone-gray: #616161;
+  --color-silver-mist: #949494;
+  --color-frost-gray: #c7c7c7;
+  --color-sky-tint: #cce0ff;
+  --color-ember-tint: #fcddcc;
+
+  --color-brand: var(--color-aia-blue);
+  --color-accent: var(--color-signal-orange);
+
+  --font-suisse: var(--font-inter), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-sans: var(--font-suisse);
+
+  --text-caption: 10px;
+  --leading-caption: 1.4;
+  --tracking-caption: 0.1px;
+  --text-body: 14px;
+  --leading-body: 1.54;
+  --text-body-lg: 16px;
+  --leading-body-lg: 1.6;
+  --text-subheading: 20px;
+  --leading-subheading: 1.43;
+  --text-heading: 24px;
+  --leading-heading: 1.33;
+  --text-heading-lg: 40px;
+  --leading-heading-lg: 1.1;
+  --text-display: 52px;
+  --leading-display: 1.07;
+  --tracking-display: -0.52px;
+  --text-display-lg: 60px;
+  --leading-display-lg: 1;
+  --tracking-display-lg: -0.6px;
+
+  --radius-card: 16px;
+  --radius-input: 8px;
+  --radius-pill: 999px;
+
+  --shadow-feature:
+    rgba(0, 0, 0, 0.02) 0px 40px 48px -20px,
+    rgba(0, 0, 0, 0.03) 0px 32px 32px -20px,
+    rgba(0, 0, 0, 0.03) 0px 16px 24px -12px,
+    rgba(0, 0, 0, 0.03) 0px 0px 0px 1px;
+}
+
+body {
+  background-color: var(--color-cloud-canvas);
+  color: var(--color-ink-black);
+  font-family: var(--font-suisse);
+}
