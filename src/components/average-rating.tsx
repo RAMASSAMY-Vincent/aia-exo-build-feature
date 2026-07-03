@@ -1,4 +1,16 @@
-type Props = { averageRating: number; totalReviews: number };
+import { formatMonthLabel, type MonthlyTrend } from '@/lib/reviews';
+
+type Props = {
+  averageRating: number;
+  totalReviews: number;
+  trend: MonthlyTrend | null;
+};
+
+// Pourcentage sans décimale : 0.25 → « 25 % » (espace insécable fr-FR).
+const percentFormatter = new Intl.NumberFormat('fr-FR', {
+  style: 'percent',
+  maximumFractionDigits: 0,
+});
 
 const StarSvg = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" className="h-9 w-9 shrink-0">
@@ -6,7 +18,19 @@ const StarSvg = () => (
   </svg>
 );
 
-export function AverageRating({ averageRating, totalReviews }: Props) {
+const ArrowUpSvg = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4 shrink-0" aria-hidden>
+    <path d="M12 4l7 8h-4v8h-6v-8H5z" />
+  </svg>
+);
+
+const ArrowDownSvg = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4 shrink-0" aria-hidden>
+    <path d="M12 20l7-8h-4V4h-6v8H5z" />
+  </svg>
+);
+
+export function AverageRating({ averageRating, totalReviews, trend }: Props) {
   const fillPercent = (Math.max(0, Math.min(5, averageRating)) / 5) * 100;
   const formatted = averageRating.toLocaleString('fr-FR', {
     minimumFractionDigits: 1,
@@ -39,6 +63,36 @@ export function AverageRating({ averageRating, totalReviews }: Props) {
       <p className="text-body leading-body text-slate-gray">
         Calculée sur <span className="text-ink-black">{totalReviews}</span> avis Google {suffix}
       </p>
+      {trend && (
+        <div className="flex flex-col items-center gap-1 text-body leading-body text-slate-gray">
+          <p>
+            <span className="text-ink-black">{trend.latestCount}</span> avis en{' '}
+            {formatMonthLabel(trend.latestYear, trend.latestMonthIndex)}
+          </p>
+          {trend.direction === 'none' ? (
+            <p className="text-silver-mist">pas de mois précédent à comparer</p>
+          ) : trend.direction === 'flat' ? (
+            <p>
+              stable vs {formatMonthLabel(trend.previousYear, trend.previousMonthIndex)}
+            </p>
+          ) : (
+            <p>
+              <span
+                className={
+                  trend.direction === 'up' ? 'text-signal-green' : 'text-signal-red'
+                }
+              >
+                <span className="inline-flex items-center gap-1 font-medium align-middle">
+                  {trend.direction === 'up' ? <ArrowUpSvg /> : <ArrowDownSvg />}
+                  {trend.direction === 'up' ? '+' : '−'}
+                  {percentFormatter.format(Math.abs(trend.deltaPercent) / 100)}
+                </span>
+              </span>{' '}
+              vs {formatMonthLabel(trend.previousYear, trend.previousMonthIndex)}
+            </p>
+          )}
+        </div>
+      )}
     </section>
   );
 }
