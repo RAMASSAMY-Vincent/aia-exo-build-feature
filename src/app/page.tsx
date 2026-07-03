@@ -48,6 +48,7 @@ export default function Home() {
         <AverageRating
           averageRating={state.averageRating}
           totalReviews={state.totalReviews}
+          trend={state.trend}
         />
       )}
     </main>
